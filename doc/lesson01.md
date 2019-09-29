@@ -67,16 +67,16 @@
 - [2018 JDK, Tools, Platform and Application, processes and you reports](https://snyk.io/blog/jvm-ecosystem-report-2018/)
 
 ### ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) 6. <a href="https://drive.google.com/open?id=0B9Ye2auQ_NsFSlZMTXBJRXJpakU">Maven.</a>
-- Среда сборки проектов <a href="http://www.apache-maven.ru/" target="_blank">Maven</a>.
-- <a href="http://search.maven.org/#browse">The Central Repository</a>
-- <a href="http://maven.apache.org/guides/mini/guide-multiple-modules.html">The Reactor</a>. Snapshots
+- Среда сборки проектов <a href="http://www.apache-maven.ru/" target="_blank">Maven</a>.+
+- <a href="http://search.maven.org/#browse">The Central Repository</a>+
+- <a href="http://maven.apache.org/guides/mini/guide-multiple-modules.html">The Reactor</a>. Snapshots+
 - <a href="http://habrahabr.ru/blogs/java/106717/" target="_blank">Недостатки Maven</a>. Другие инструменты сборки.
 - Справочник:
-  - <a href="https://www.youtube.com/watch?v=21qdRgFsTy0">Видео: Maven vs Gradle vs SBT (Архипов, Борисов, Садогурский)</a>
-  - <a href="http://habrahabr.ru/post/77333/">Автоматизация сборки проекта</a>
-  - <a href="http://maven.apache.org/">Home Page</a>
-  - <a href="http://books.sonatype.com/mvnref-book/reference/index.html">Maven: The Complete Reference</a>
-  - <a href="http://study-and-dev.com/blog/build_management_maven_1/">Разработка ПО вместе с maven</a>
+  - <a href="https://www.youtube.com/watch?v=21qdRgFsTy0">Видео: Maven vs Gradle vs SBT (Архипов, Борисов, Садогурский)</a>+
+  - <a href="http://habrahabr.ru/post/77333/">Автоматизация сборки проекта</a>+
+  - <a href="http://maven.apache.org/">Home Page</a>+
+  - <a href="http://books.sonatype.com/mvnref-book/reference/index.html">Maven: The Complete Reference</a>+
+  - <a href="http://study-and-dev.com/blog/build_management_maven_1/">Разработка ПО вместе с maven</a>+
   - <a href="http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html">Build Lifecycle</a>
   - <a href="http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html">Dependency Mechanism</a>
   - <a href="http://habrahabr.ru/post/111408/">Создание своих архетипов и каталогов в Maven</a>
@@ -88,17 +88,17 @@
 > - Устанавливать Tomcat лучше простым скачиванием архива `xxx.zip` и копированием из него в **каталог без пробелов и русских букв** (пример `С:\java\apache-tomcat-9.0.14`)
 
 #### Apply 1_4_switch_to_war.patch
-> - Обновил сервлеты до версии 4.0 (Tomcat 9 использует это API, хотя для нас не принципиально, т.к. мы никакие <a href="https://ru.wikipedia.org/wiki/Сервлет_(Java)">фичи 3.x и 4.x Servlet API</a> не используем)
+> - Обновил сервлеты до версии 4.0 (Tomcat 9 использует это API, хотя для нас не принципиально, т.к. мы никакие <a href="https://ru.wikipedia.org/wiki/Сервлет_(Java)">фичи 3.x и 4.x Servlet API</a>+ не используем)
 > - Переименовал `userList.jsp` в `users.jsp`
 > - Сервлет добавляется в следующем патче, те **в `web.xml` он будет подчеркиваться красным.**
 
 #### Apply 1_5_add_servlet_api.patch
 
-> - Если зависимость `servlet-api` не подтянулась, сделай `Reimport All Maven Projects` (см. [Обновить зависимости в maven проекте](https://github.com/JavaOPs/topjava/wiki/IDEA#Обновить-зависимости-в-maven-проекте)).
+> - Если зависимость `servlet-api` не подтянулась, сделай `Reimport All Maven Projects` (см. [Обновить зависимости в maven проекте](https://github.com/JavaOPs/topjava/wiki/IDEA#Обновить-зависимости-в-maven-проекте)+).
 **Все зависимости в Maven прект подтягиваются ТОЛЬКО через Maven**. 
-> - [Проверка, кто занял порт](https://stackoverflow.com/a/38953356/548473) (в случае проблем с запуском и дебагом на портах 8080, 8000)</a>
-> - [**Деплой war в Tomcat с Application context**](https://github.com/JavaOPs/topjava/wiki/IDEA#Деплой-war-в-tomcat-application-context-должен-быть-тот-же-что-и-url-приложения-деплоить-надо-war-exploded)
-> - [**Динамическое обновление без передеплоя**](https://github.com/JavaOPs/topjava/wiki/IDEA#Для-динамической-перегрузки-ресурсов-кнопка-нажмите-кнопку-update-resource-on-frame-deactivation)
+> - [Проверка, кто занял порт](https://stackoverflow.com/a/38953356/548473)+ (в случае проблем с запуском и дебагом на портах 8080, 8000)</a>
+> - [**Деплой war в Tomcat с Application context**](https://github.com/JavaOPs/topjava/wiki/IDEA#Деплой-war-в-tomcat-application-context-должен-быть-тот-же-что-и-url-приложения-деплоить-надо-war-exploded)+
+> - [**Динамическое обновление без передеплоя**](https://github.com/JavaOPs/topjava/wiki/IDEA#Для-динамической-перегрузки-ресурсов-кнопка-нажмите-кнопку-update-resource-on-frame-deactivation)+
 
 #### Apply 1_6_forward_to_redirect.patch
 
