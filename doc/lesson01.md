@@ -70,14 +70,14 @@
 - Среда сборки проектов <a href="http://www.apache-maven.ru/" target="_blank">Maven</a>.+
 - <a href="http://search.maven.org/#browse">The Central Repository</a>+
 - <a href="http://maven.apache.org/guides/mini/guide-multiple-modules.html">The Reactor</a>. Snapshots+
-- <a href="http://habrahabr.ru/blogs/java/106717/" target="_blank">Недостатки Maven</a>. Другие инструменты сборки.
+- <a href="http://habrahabr.ru/blogs/java/106717/" target="_blank">Недостатки Maven</a>. Другие инструменты сборки.+
 - Справочник:
   - <a href="https://www.youtube.com/watch?v=21qdRgFsTy0">Видео: Maven vs Gradle vs SBT (Архипов, Борисов, Садогурский)</a>+
   - <a href="http://habrahabr.ru/post/77333/">Автоматизация сборки проекта</a>+
   - <a href="http://maven.apache.org/">Home Page</a>+
   - <a href="http://books.sonatype.com/mvnref-book/reference/index.html">Maven: The Complete Reference</a>+
   - <a href="http://study-and-dev.com/blog/build_management_maven_1/">Разработка ПО вместе с maven</a>+
-  - <a href="http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html">Build Lifecycle</a>
+  - <a href="http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html">Build Lifecycle</a>+
   - <a href="http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html">Dependency Mechanism</a>
   - <a href="http://habrahabr.ru/post/111408/">Создание своих архетипов и каталогов в Maven</a>
   - <a href="http://www.ibm.com/developerworks/ru/library/j-5things13/">Зависимости, профили</a>
