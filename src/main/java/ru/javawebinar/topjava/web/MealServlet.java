@@ -39,22 +39,21 @@ public class MealServlet extends HttpServlet {
         if (action != null && action.equals("delete")) {
             String id = request.getParameter("id");
             mealService.deleteById(Integer.parseInt(id));
-        }
-        if (action != null && action.equals("update")) {
+            response.sendRedirect("meals");
+        } else if (action != null && action.equals("update")) {
             String id = request.getParameter("id");
             Meal updated = mealService.getById(Integer.parseInt(id));
             request.setAttribute("updated", updated);
             request.getRequestDispatcher("/meal.jsp").forward(request, response);
-        }
-        if (action != null && action.equals("add")) {
+        } else if (action != null && action.equals("add")) {
             Meal meal = mealService.create();
             request.setAttribute("updated", meal);
             request.getRequestDispatcher("/meal.jsp").forward(request, response);
+        } else {
+            List<MealTo> mealTos = MealsUtil.getWithExcess(mealService.getAll(), DEFAULT_CALORIES_PER_DATE);
+            request.setAttribute("meals", mealTos);
+            request.getRequestDispatcher("/meals.jsp").forward(request, response);
         }
-
-        List<MealTo> mealTos = MealsUtil.getWithExcess(mealService.getAll(), DEFAULT_CALORIES_PER_DATE);
-        request.setAttribute("meals", mealTos);
-        request.getRequestDispatcher("/meals.jsp").forward(request, response);
     }
 
     @Override
