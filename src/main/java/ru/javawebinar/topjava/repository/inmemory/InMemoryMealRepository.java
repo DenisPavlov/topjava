@@ -21,7 +21,8 @@ public class InMemoryMealRepository implements MealRepository {
     @Override
     public Meal save(Meal meal) {
         if (meal.isNew()) meal.setId(counter.incrementAndGet());
-        return meals.put(meal.getId(), meal);
+        meals.put(meal.getId(), meal);
+        return meals.get(meal.getId());
     }
 
     @Override

@@ -22,9 +22,11 @@
             <td>${f:formatLocalDateTime(meal.dateTime, 'dd.MM.yyyy hh:mm')}</td>
             <td>${meal.description}</td>
             <td>${meal.calories}</td>
+            <td><a href="${pageContext.request.contextPath}/meals?action=update&id=${meal.id}">Update</a></td>
+            <td><a href="${pageContext.request.contextPath}/meals?action=delete&id=${meal.id}">Delete</a></td>
         </tr>
     </c:forEach>
-
 </table>
+<p><a href="${pageContext.request.contextPath}/meals?action=add">Добавить еду</a></p>
 </body>
 </html>

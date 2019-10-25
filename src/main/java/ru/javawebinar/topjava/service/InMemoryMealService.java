@@ -17,14 +17,8 @@ public class InMemoryMealService implements MealService {
     private MealRepository mealRepository = new InMemoryMealRepository();
 
     @Override
-    public Meal create(Meal meal) {
-        Meal actual = mealRepository.getById(meal.getId());
-
-        if (actual != null) {
-            String message = "Meal with id " + meal.getId() + " already exists";
-            log.warn(message);
-            throw new MealAlreadyExists(message);
-        }
+    public Meal create() {
+        Meal meal = new Meal();
         return mealRepository.save(meal);
     }
 
@@ -51,7 +45,8 @@ public class InMemoryMealService implements MealService {
     }
 
     @Override
-    public Meal delete(Meal meal) {
-        return mealRepository.delete(meal);
+    public Meal deleteById(int id) {
+        Meal current = mealRepository.getById(id);
+        return mealRepository.delete(current);
     }
 }
