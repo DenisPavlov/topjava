@@ -102,8 +102,8 @@
 
 #### Apply 1_6_forward_to_redirect.patch
 
-- <a href="http://tomcat.apache.org/">Tomcat Home Page</a>
-- <a href="http://java-course.ru/student/book1/servlet/">Сервлеты</a>
+- <a href="http://tomcat.apache.org/">Tomcat Home Page</a>+
+- <a href="http://java-course.ru/student/book1/servlet/">Сервлеты</a>+
 - <a href="https://devcolibri.com/как-создать-servlet-полное-руководство/">Руководство: как создать servlet</a>
 - Томкат менеджер: [http://localhost:8080/manager](http://localhost:8080/manager)
   - в `TOMCAT_HOME\conf\tomcat-users.xml` нужно добавить 
@@ -205,8 +205,8 @@ JSF- sun-овский еще фреймворк, с которым я ни ра�
     ...
 ```
 
-  - <a href="http://java-course.ru/student/book1/servlet/">Интернет-приложения на JAVA</a>
-  - <a href="http://java-course.ru/student/book1/jsp/">JSP</a>
+  - <a href="http://java-course.ru/student/book1/servlet/">Интернет-приложения на JAVA</a>+
+  - <a href="http://java-course.ru/student/book1/jsp/">JSP</a>+
   - [Как создать Servlet? Полное руководство](https://devcolibri.com/как-создать-servlet-полное-руководство)
   - [JSTL для написания JSP страниц](https://devcolibri.com/jstl-для-написания-jsp-страниц/)
   - <a href="http://javatutor.net/articles/jstl-patterns-for-developing-web-application-1">JSTL: Шаблоны для разработки веб-приложений в java</a>
