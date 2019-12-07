@@ -280,7 +280,7 @@ protected void doPost(HttpServletRequest request, ...) {
 - 12 `volatile` при ++ не помогает от многопоточности. Почему? 
 - 13 Обратите также внимание на то, чтобы реализация вашей коллекции для хранения еды была также многопоточной.
 - 14 Не делайте дублирование кода `MealsUtil`. Возможно вам пригодятся константы `LocalTime.MIN` и `LocalTime.MAX`
-- 15 Не дублируйте строки в `jsp`. Посмотрите на <a href="https://steveswinsburg.wordpress.com/2008/09/04/the-ternary-operator-and-jsp/">тернарный оператор</a>.
+- 15 Не дублируйте строки в `jsp`. Посмотрите на <a href="https://steveswinsburg.wordpress.com/2008/09/04/the-ternary-operator-and-jsp/">тернарный оператор+</a>.
 - 16 после операции `delete` в браузере должен быть url `http:\\localhost:8080\topjava\meals`
 - 17 Перед чекином проверяйте свой ченджлист (`Ctrl+D` на файле из `Local Changes` - посмотреть что поменялось). Если там только пробелы/переводы строк, не надо его комитить - делайте файлу `Git->revert`.
 - 18 Учтите в названии реализации CRUD, что
