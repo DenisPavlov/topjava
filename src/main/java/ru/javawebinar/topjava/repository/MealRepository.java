@@ -2,7 +2,7 @@ package ru.javawebinar.topjava.repository;
 
 import ru.javawebinar.topjava.model.Meal;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface MealRepository {
     Meal save(Meal meal, long userId);
@@ -13,5 +13,5 @@ public interface MealRepository {
     // null if not found
     Meal get(int id, long userId);
 
-    Collection<Meal> getAll(long userId);
+    List<Meal> getAll(long userId);
 }

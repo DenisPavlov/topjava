@@ -10,6 +10,8 @@ import ru.javawebinar.topjava.util.MealsUtil;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static ru.javawebinar.topjava.util.ValidationUtil.assureIdConsistent;
+import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
 import static ru.javawebinar.topjava.web.SecurityUtil.authUserId;
 
 public class MealRestController {
@@ -30,12 +32,19 @@ public class MealRestController {
 
     public Meal create(Meal meal) {
         log.info("create");
+        checkNew(meal);
         return service.create(meal, authUserId());
     }
 
     public void delete(int id) {
         log.info("delete");
         service.delete(id, authUserId());
+    }
+
+    public void update(Meal meal, int id) {
+        log.info("update {} with id={}", meal, id);
+        assureIdConsistent(meal, id);
+        service.update(meal, authUserId());
     }
 
     public List<MealTo> getBetween(LocalDateTime start, LocalDateTime end ) {
