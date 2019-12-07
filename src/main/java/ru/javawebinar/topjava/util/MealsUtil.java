@@ -1,7 +1,6 @@
 package ru.javawebinar.topjava.util;
 
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.to.ExcessMealTo;
 import ru.javawebinar.topjava.to.MealTo;
 
 import java.time.LocalDate;
@@ -30,19 +29,19 @@ public class MealsUtil {
 
     public static final int DEFAULT_CALORIES_PER_DAY = 2000;
 
-    public static List<ExcessMealTo> getWithExcess(Collection<Meal> meals, int caloriesPerDay) {
+    public static List<MealTo> getWithExcess(Collection<Meal> meals, int caloriesPerDay) {
         return getFilteredWithExcess(meals, caloriesPerDay, meal -> true);
     }
 
-    public static List<ExcessMealTo> getFilteredWithExcess(Collection<Meal> meals, int caloriesPerDay, LocalTime startTime, LocalTime endTime) {
+    public static List<MealTo> getFilteredWithExcess(Collection<Meal> meals, int caloriesPerDay, LocalTime startTime, LocalTime endTime) {
         return getFilteredWithExcess(meals, caloriesPerDay, meal -> DateTimeUtil.isBetween(meal.getTime(), startTime, endTime));
     }
 
-    public static MealTo create(Meal meal) {
-        return new MealTo(meal.getId(), meal.getDateTime(), meal.getDescription(), meal.getCalories());
+    public static List<MealTo> getFilteredWithExcess(Collection<Meal> meals, int caloriesPerDay, LocalDateTime start, LocalDateTime end) {
+        return getFilteredWithExcess(meals, caloriesPerDay, meal -> DateTimeUtil.isBetween(meal.getDateTime(), start, end));
     }
 
-    private static List<ExcessMealTo> getFilteredWithExcess(Collection<Meal> meals, int caloriesPerDay, Predicate<Meal> filter) {
+    private static List<MealTo> getFilteredWithExcess(Collection<Meal> meals, int caloriesPerDay, Predicate<Meal> filter) {
         Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
                 .collect(
                         Collectors.groupingBy(Meal::getDate, Collectors.summingInt(Meal::getCalories))
@@ -55,7 +54,7 @@ public class MealsUtil {
                 .collect(toList());
     }
 
-    private static ExcessMealTo createWithExcess(Meal meal, boolean excess) {
-        return new ExcessMealTo(meal.getId(), meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
+    private static MealTo createWithExcess(Meal meal, boolean excess) {
+        return new MealTo(meal.getId(), meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
     }
 }
