@@ -247,8 +247,8 @@ UNIQUE индекс нужен для обеcпечения уникальнос
 Индекс на pk (id) postgres создает автоматически: <a href="http://stackoverflow.com/questions/970562/postgres-and-indexes-on-foreign-keys-and-primary-keys">Postgres and Indexes on Foreign Keys and Primary Keys</a>
   - [PostgreSQL: индексы](https://postgrespro.ru/docs/postgresql/10/indexes-intro)
   - <a href="http://postgresguide.com/performance/indexes.html">Postgres Guide: Indexes</a>
-  - [Оптимизация запросов. Основы EXPLAIN в PostgreSQL](https://habrahabr.ru/post/203320/)
-  - [Оптимизация запросов. Часть 2](https://habrahabr.ru/post/203386/)
+  - [Оптимизация запросов. Основы EXPLAIN в PostgreSQL](https://habrahabr.ru/post/203320/)+
+  - [Оптимизация запросов. Часть 2](https://habrahabr.ru/post/203386/)+
   - [Оптимизация запросов. Часть 3](https://habrahabr.ru/post/203484/)
 
 > ![question](https://cloud.githubusercontent.com/assets/13649199/13672858/9cd58692-e6e7-11e5-905d-c295d2a456f1.png) Как правильно придумать индекс для базы? Указать в нем все поля, комбинация которых создает по смыслу уникальную запись, или какие-то еще есть условия?
