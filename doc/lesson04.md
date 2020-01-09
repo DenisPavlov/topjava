@@ -39,7 +39,7 @@
 #### **Apply 4_3_HW3_fix_logging.patch**
 > При запуске одновременно `User-` и `MealServiceTest` (нарпимер через `mvn test`) `SLF4JBridgeHandler` добавится 2 раза и логи postgres во втором тесте дублируются.
 Перенес инициализацию в приложение, т.к логи могут понадобится не только в тестах, но и здесь.
-- см. [вызов статического метода из конфигурации спринга](https://stackoverflow.com/a/27296470/548473) 
+- см. [вызов статического метода из конфигурации спринга](https://stackoverflow.com/a/27296470/548473)+ 
 
 ## Занятие 4:
 ### ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) 2. <a href="https://drive.google.com/open?id=0B9Ye2auQ_NsFU005ZzBNZmZnTVU">Методы улучшения качества кода</a>
