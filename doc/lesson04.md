@@ -49,7 +49,7 @@
      - после правок паттернов можно сделать [повторный анализ](https://support.codacy.com/hc/en-us/articles/213840489-How-do-I-reanalyze-my-project-). С результатами тормозит.  
   - <a href="https://travis-ci.org/">Сборку и тесты Travis</a> (результат выполнения тестов проекта)
      - [Что такое travis-ci.org](https://habr.com/post/140344/)+
-     - [Travis CI Tutorial](https://dzone.com/articles/travis-ci-tutorial-java-projects)
+     - [Travis CI Tutorial](https://dzone.com/articles/travis-ci-tutorial-java-projects)+
      - <a href="https://docs.travis-ci.com/user/languages/java/">Сборка Java проекта</a>
   - Сервис по проверке `maven` зависимостей VersionEye [закрыли](https://blog.versioneye.com/2017/10/26/the-start-of-a-new-journey). Ищу замену...
 #### Сделайте `push` для отображения результатов текущего состояния проекта.
