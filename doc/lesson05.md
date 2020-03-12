@@ -20,7 +20,7 @@
 - [Добавил javax зависимости](https://stackoverflow.com/questions/48204141/replacements-for-deprecated-jpms-modules-with-java-ee-apis)
 - Сделал создание коллекций через фабричные методы `List.of`
 - Как пример в `InMemoryMealRepository` использовал *local variable type inference* `var`.
-  - [26 рекомендаций по использованию типа var в Java](https://habr.com/ru/post/438206/)
+  - [26 рекомендаций по использованию типа var в Java](https://habr.com/ru/post/438206/)+
 
 ## ![hw](https://cloud.githubusercontent.com/assets/13649199/13672719/09593080-e6e7-11e5-81d1-5cb629c438ca.png) Разбор домашнего задания HW4
 
