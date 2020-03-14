@@ -168,7 +168,7 @@
 > - В `UserServiceTest.setUp` вместо вызова метода `UserService.evictCache` сделал очистку программно через `CacheManager`
 >   - [Evict Ehcache elements programmatically, using Spring](https://stackoverflow.com/questions/29557959/evict-ehcache-elements-programmatically-using-spring)
 
--  <a href="http://habrahabr.ru/post/113945/">Кэширование в Spring Framework</a>
+-  <a href="http://habrahabr.ru/post/113945/">Кэширование в Spring Framework</a>+
 -  Дополнительно:
    -  <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#cache">Spring cache Abstraction</a>
    -  <a href="http://habrahabr.ru/post/25140/">Распределённая система кэша ehcache</a>
