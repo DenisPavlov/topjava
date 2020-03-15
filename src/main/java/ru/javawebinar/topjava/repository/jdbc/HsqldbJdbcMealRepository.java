@@ -25,4 +25,9 @@ public class HsqldbJdbcMealRepository extends JdbcMealRepository {
     protected Object convertToActualDate(LocalDateTime dateTime) {
         return Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
+
+    @Override
+    public Meal getWithUser(int id, int userId) {
+        throw new UnsupportedOperationException();
+    }
 }

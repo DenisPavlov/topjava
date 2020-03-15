@@ -100,6 +100,12 @@ public abstract class MealServiceTest {
     }
 
     @Test
+    public void getWithUser() {
+        Meal actual = service.getWithUser(ADMIN_MEAL_ID, ADMIN_ID);
+        assertMatch(actual, ADMIN_MEAL1);
+    }
+
+    @Test
     public void getNotFound() throws Exception {
         thrown.expect(NotFoundException.class);
         service.get(MEAL1_ID, ADMIN_ID);

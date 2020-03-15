@@ -20,6 +20,7 @@ import java.time.LocalTime;
 //                "m.description=:desc where m.id=:id and m.user.id=:userId")
 })
 @Entity
+@NamedEntityGraph(name = "Meal.user", attributeNodes = @NamedAttributeNode("user"))
 @Table(name = "meals", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date_time"}, name = "meals_unique_user_datetime_idx")})
 public class Meal extends AbstractBaseEntity {
     public static final String ALL_SORTED = "Meal.getAll";
