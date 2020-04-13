@@ -119,7 +119,7 @@ C `@BatchSize(size = 200)` делается запрос на юзеров (1), 
 > - В `web.xml` задаются профили запуска по умолчанию: `<param-value>postgres,datajpa</param-value>`. 
 ### Если запускаетесь под HSQLDB, надо поменять на `hsqldb,datajpa`.
 
--  <a href="http://www.mkyong.com/servlet/what-is-listener-servletcontextlistener-example/">ServletContextListener</a>.
+-  <a href="http://www.mkyong.com/servlet/what-is-listener-servletcontextlistener-example/">ServletContextListener</a>.+
 -  <a href="https://docs.oracle.com/javaee/6/tutorial/doc/bnafi.html">Servlet Lifecycle</a>
 
 ### ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) 6.   <a href="https://drive.google.com/open?id=0B9Ye2auQ_NsFN3k0ZVk1MnF5TjQ">JPS, JSTL, internationalization</a>
