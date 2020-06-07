@@ -49,37 +49,38 @@ public class MealServlet extends HttpServlet {
     }
 
     @Override
+    // TODO: 04.06.2020 Этот метод вроде отработал. 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-
-        switch (action == null ? "all" : action) {
-            case "delete":
-                int id = getId(request);
-                mealController.delete(id);
-                response.sendRedirect("meals");
-                break;
-            case "create":
-            case "update":
-                final Meal meal = "create".equals(action) ?
-                        new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000) :
-                        mealController.get(getId(request));
-                request.setAttribute("meal", meal);
-                request.getRequestDispatcher("/mealForm.jsp").forward(request, response);
-                break;
-            case "filter":
-                LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
-                LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
-                LocalTime startTime = parseLocalTime(request.getParameter("startTime"));
-                LocalTime endTime = parseLocalTime(request.getParameter("endTime"));
-                request.setAttribute("meals", mealController.getBetween(startDate, startTime, endDate, endTime));
-                request.getRequestDispatcher("/meals.jsp").forward(request, response);
-                break;
-            case "all":
-            default:
-                request.setAttribute("meals", mealController.getAll());
-                request.getRequestDispatcher("/meals.jsp").forward(request, response);
-                break;
-        }
+//        String action = request.getParameter("action");
+//
+//        switch (action == null ? "all" : action) {
+//            case "delete":
+//                int id = getId(request);
+//                mealController.delete(id);
+//                response.sendRedirect("meals");
+//                break;
+//            case "create":
+//            case "update":
+//                final Meal meal = "create".equals(action) ?
+//                        new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000) :
+//                        mealController.get(getId(request));
+//                request.setAttribute("meal", meal);
+//                request.getRequestDispatcher("/mealForm.jsp").forward(request, response);
+//                break;
+//            case "filter":
+//                LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
+//                LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
+//                LocalTime startTime = parseLocalTime(request.getParameter("startTime"));
+//                LocalTime endTime = parseLocalTime(request.getParameter("endTime"));
+//                request.setAttribute("meals", mealController.getBetween(startDate, startTime, endDate, endTime));
+//                request.getRequestDispatcher("/meals.jsp").forward(request, response);
+//                break;
+//            case "all":
+//            default:
+//                request.setAttribute("meals", mealController.getAll());
+//                request.getRequestDispatcher("/meals.jsp").forward(request, response);
+//                break;
+//        }
     }
 
     private int getId(HttpServletRequest request) {
