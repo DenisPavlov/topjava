@@ -1,0 +1,140 @@
+Index: src/main/java/ru/javawebinar/topjava/model/AbstractBaseEntity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/javawebinar/topjava/model/AbstractBaseEntity.java	(revision 6a58214d0f2c948014c9afbe9c215c5d27ad0388)
++++ src/main/java/ru/javawebinar/topjava/model/AbstractBaseEntity.java	(date 1584991749014)
+@@ -2,6 +2,7 @@
+ 
+ import org.hibernate.Hibernate;
+ import org.springframework.data.domain.Persistable;
++import org.springframework.util.Assert;
+ 
+ import javax.persistence.*;
+ 
+@@ -35,6 +36,12 @@
+     public Integer getId() {
+         return id;
+     }
++
++    // doesn't work for hibernate lazy proxy
++    public int id() {
++        Assert.notNull(id, "Entity must has id");
++        return id;
++    }
+ 
+     @Override
+     public boolean isNew() {
+Index: src/test/java/ru/javawebinar/topjava/service/AbstractMealServiceTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/ru/javawebinar/topjava/service/AbstractMealServiceTest.java	(revision 6a58214d0f2c948014c9afbe9c215c5d27ad0388)
++++ src/test/java/ru/javawebinar/topjava/service/AbstractMealServiceTest.java	(date 1584993051308)
+@@ -46,7 +46,7 @@
+     public void create() throws Exception {
+         Meal newMeal = getNew();
+         Meal created = service.create(newMeal, USER_ID);
+-        Integer newId = created.getId();
++        int newId = created.id();
+         newMeal.setId(newId);
+         MEAL_MATCHER.assertMatch(created, newMeal);
+         MEAL_MATCHER.assertMatch(service.get(newId, USER_ID), newMeal);
+Index: src/main/java/ru/javawebinar/topjava/util/ValidationUtil.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/javawebinar/topjava/util/ValidationUtil.java	(revision 6a58214d0f2c948014c9afbe9c215c5d27ad0388)
++++ src/main/java/ru/javawebinar/topjava/util/ValidationUtil.java	(date 1584991749044)
+@@ -39,7 +39,7 @@
+ //      conservative when you reply, but accept liberally (http://stackoverflow.com/a/32728226/548473)
+         if (entity.isNew()) {
+             entity.setId(id);
+-        } else if (entity.getId() != id) {
++        } else if (entity.id() != id) {
+             throw new IllegalArgumentException(entity + " must be with id=" + id);
+         }
+     }
+Index: src/test/java/ru/javawebinar/topjava/service/AbstractUserServiceTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/ru/javawebinar/topjava/service/AbstractUserServiceTest.java	(revision 6a58214d0f2c948014c9afbe9c215c5d27ad0388)
++++ src/test/java/ru/javawebinar/topjava/service/AbstractUserServiceTest.java	(date 1584993051309)
+@@ -43,7 +43,7 @@
+     public void create() throws Exception {
+         User newUser = getNew();
+         User created = service.create(newUser);
+-        Integer newId = created.getId();
++        int newId = created.id();
+         newUser.setId(newId);
+         USER_MATCHER.assertMatch(created, newUser);
+         USER_MATCHER.assertMatch(service.get(newId), newUser);
+Index: src/main/java/ru/javawebinar/topjava/repository/datajpa/DataJpaMealRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/javawebinar/topjava/repository/datajpa/DataJpaMealRepository.java	(revision 6a58214d0f2c948014c9afbe9c215c5d27ad0388)
++++ src/main/java/ru/javawebinar/topjava/repository/datajpa/DataJpaMealRepository.java	(date 1584993091759)
+@@ -22,7 +22,7 @@
+     @Override
+     @Transactional
+     public Meal save(Meal meal, int userId) {
+-        if (!meal.isNew() && get(meal.getId(), userId) == null) {
++        if (!meal.isNew() && get(meal.id(), userId) == null) {
+             return null;
+         }
+         meal.setUser(crudUserRepository.getOne(userId));
+Index: src/main/java/ru/javawebinar/topjava/service/MealService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/javawebinar/topjava/service/MealService.java	(revision 6a58214d0f2c948014c9afbe9c215c5d27ad0388)
++++ src/main/java/ru/javawebinar/topjava/service/MealService.java	(date 1584991749034)
+@@ -40,7 +40,7 @@
+ 
+     public void update(Meal meal, int userId) {
+         Assert.notNull(meal, "meal must not be null");
+-        checkNotFoundWithId(repository.save(meal, userId), meal.getId());
++        checkNotFoundWithId(repository.save(meal, userId), meal.id());
+     }
+ 
+     public Meal create(Meal meal, int userId) {
+Index: src/main/java/ru/javawebinar/topjava/repository/jpa/JpaMealRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/javawebinar/topjava/repository/jpa/JpaMealRepository.java	(revision 6a58214d0f2c948014c9afbe9c215c5d27ad0388)
++++ src/main/java/ru/javawebinar/topjava/repository/jpa/JpaMealRepository.java	(date 1584993091766)
+@@ -25,7 +25,7 @@
+         if (meal.isNew()) {
+             em.persist(meal);
+             return meal;
+-        } else if (get(meal.getId(), userId) == null) {
++        } else if (get(meal.id(), userId) == null) {
+             return null;
+         }
+         return em.merge(meal);
+Index: src/main/java/ru/javawebinar/topjava/service/UserService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/javawebinar/topjava/service/UserService.java	(revision 6a58214d0f2c948014c9afbe9c215c5d27ad0388)
++++ src/main/java/ru/javawebinar/topjava/service/UserService.java	(date 1584991749038)
+@@ -49,7 +49,7 @@
+     @CacheEvict(value = "users", allEntries = true)
+     public void update(User user) {
+         Assert.notNull(user, "user must not be null");
+-        checkNotFoundWithId(repository.save(user), user.getId());
++        checkNotFoundWithId(repository.save(user), user.id());
+     }
+ 
+     public User getWithMeals(int id) {

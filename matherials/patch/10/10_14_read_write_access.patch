@@ -1,0 +1,150 @@
+Index: src/test/java/ru/javawebinar/topjava/web/json/JsonUtilTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/ru/javawebinar/topjava/web/json/JsonUtilTest.java	(revision 4b5adbbd2efab4d9a7ec9f365d1e6815a8eb50d5)
++++ src/test/java/ru/javawebinar/topjava/web/json/JsonUtilTest.java	(date 1586989717774)
+@@ -1,10 +1,16 @@
+ package ru.javawebinar.topjava.web.json;
+ 
+ import org.junit.jupiter.api.Test;
++import ru.javawebinar.topjava.UserTestData;
+ import ru.javawebinar.topjava.model.Meal;
++import ru.javawebinar.topjava.model.User;
+ 
+ import java.util.List;
+ 
++import static org.hamcrest.CoreMatchers.containsString;
++import static org.hamcrest.CoreMatchers.not;
++import static org.hamcrest.MatcherAssert.assertThat;
++import static org.junit.jupiter.api.Assertions.assertEquals;
+ import static ru.javawebinar.topjava.MealTestData.*;
+ 
+ class JsonUtilTest {
+@@ -24,4 +30,15 @@
+         List<Meal> meals = JsonUtil.readValues(json, Meal.class);
+         MEAL_MATCHER.assertMatch(meals, MEALS);
+     }
++
++    @Test
++    void writeOnlyAccess() throws Exception {
++        String json = JsonUtil.writeValue(UserTestData.USER);
++        System.out.println(json);
++        assertThat(json, not(containsString("password")));
++        String jsonWithPass = UserTestData.jsonWithPassword(UserTestData.USER, "newPass");
++        System.out.println(jsonWithPass);
++        User user = JsonUtil.readValue(jsonWithPass, User.class);
++        assertEquals(user.getPassword(), "newPass");
++    }
+ }
+\ No newline at end of file
+Index: src/main/java/ru/javawebinar/topjava/model/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/javawebinar/topjava/model/User.java	(revision 4b5adbbd2efab4d9a7ec9f365d1e6815a8eb50d5)
++++ src/main/java/ru/javawebinar/topjava/model/User.java	(date 1586989168427)
+@@ -1,5 +1,6 @@
+ package ru.javawebinar.topjava.model;
+ 
++import com.fasterxml.jackson.annotation.JsonProperty;
+ import org.hibernate.annotations.BatchSize;
+ import org.hibernate.annotations.Cache;
+ import org.hibernate.annotations.CacheConcurrencyStrategy;
+@@ -38,6 +39,8 @@
+     @Column(name = "password", nullable = false)
+     @NotBlank
+     @Size(min = 5, max = 100)
++    // https://stackoverflow.com/a/12505165/548473
++    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+     private String password;
+ 
+     @Column(name = "enabled", nullable = false, columnDefinition = "bool default true")
+@@ -45,6 +48,7 @@
+ 
+     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()")
+     @NotNull
++    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+     private Date registered = new Date();
+ 
+     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+Index: src/test/java/ru/javawebinar/topjava/web/user/AdminRestControllerTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/ru/javawebinar/topjava/web/user/AdminRestControllerTest.java	(revision 4b5adbbd2efab4d9a7ec9f365d1e6815a8eb50d5)
++++ src/test/java/ru/javawebinar/topjava/web/user/AdminRestControllerTest.java	(date 1586989717797)
+@@ -105,7 +105,7 @@
+         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
+                 .contentType(MediaType.APPLICATION_JSON)
+                 .with(userHttpBasic(ADMIN))
+-                .content(JsonUtil.writeValue(newUser)))
++                .content(UserTestData.jsonWithPassword(newUser, "newPass")))
+                 .andExpect(status().isCreated());
+ 
+         User created = readFromJson(action, User.class);
+Index: src/main/java/ru/javawebinar/topjava/web/json/JsonUtil.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/javawebinar/topjava/web/json/JsonUtil.java	(revision 4b5adbbd2efab4d9a7ec9f365d1e6815a8eb50d5)
++++ src/main/java/ru/javawebinar/topjava/web/json/JsonUtil.java	(date 1586989168421)
+@@ -1,10 +1,12 @@
+ package ru.javawebinar.topjava.web.json;
+ 
+ import com.fasterxml.jackson.core.JsonProcessingException;
++import com.fasterxml.jackson.core.type.TypeReference;
+ import com.fasterxml.jackson.databind.ObjectReader;
+ 
+ import java.io.IOException;
+ import java.util.List;
++import java.util.Map;
+ 
+ import static ru.javawebinar.topjava.web.json.JacksonObjectMapper.getMapper;
+ 
+@@ -34,4 +36,14 @@
+             throw new IllegalStateException("Invalid write to JSON:\n'" + obj + "'", e);
+         }
+     }
++
++    public static <T> String writeAdditionProps(T obj, String addName, Object addValue) {
++        return writeAdditionProps(obj, Map.of(addName, addValue));
++    }
++
++    public static <T> String writeAdditionProps(T obj, Map<String, Object> addProps) {
++        Map<String, Object> map = getMapper().convertValue(obj, new TypeReference<Map<String, Object>>() {});
++        map.putAll(addProps);
++        return writeValue(map);
++    }
+ }
+\ No newline at end of file
+Index: src/test/java/ru/javawebinar/topjava/UserTestData.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/ru/javawebinar/topjava/UserTestData.java	(revision 4b5adbbd2efab4d9a7ec9f365d1e6815a8eb50d5)
++++ src/test/java/ru/javawebinar/topjava/UserTestData.java	(date 1586989717787)
+@@ -2,6 +2,7 @@
+ 
+ import ru.javawebinar.topjava.model.Role;
+ import ru.javawebinar.topjava.model.User;
++import ru.javawebinar.topjava.web.json.JsonUtil;
+ 
+ import java.util.Collections;
+ import java.util.Date;
+@@ -11,6 +12,10 @@
+ public class UserTestData {
+     public static TestMatcher<User> USER_MATCHER = TestMatcher.usingFieldsComparator(User.class, "registered", "meals", "password");
+ 
++    public static String jsonWithPassword(User user, String passw) {
++        return JsonUtil.writeAdditionProps(user, "password", passw);
++    }
++
+     public static final int USER_ID = START_SEQ;
+     public static final int ADMIN_ID = START_SEQ + 1;
+ 

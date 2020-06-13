@@ -1,0 +1,40 @@
+Index: src/main/java/ru/javawebinar/topjava/web/meal/JspMealController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/javawebinar/topjava/web/meal/JspMealController.java	(revision 2076b5f98d3a143f5e9f57783118f893d56be59b)
++++ src/main/java/ru/javawebinar/topjava/web/meal/JspMealController.java	(date 1585754894896)
+@@ -43,7 +43,7 @@
+     public String updateOrCreate(HttpServletRequest request) {
+         Meal meal = new Meal(LocalDateTime.parse(request.getParameter("dateTime")),
+                 request.getParameter("description"),
+-                Integer.valueOf(request.getParameter("calories")));
++                Integer.parseInt(request.getParameter("calories")));
+ 
+         if (request.getParameter("id").isEmpty()) {
+             super.create(meal);
+@@ -65,6 +65,6 @@
+ 
+     private int getId(HttpServletRequest request) {
+         String paramId = Objects.requireNonNull(request.getParameter("id"));
+-        return Integer.valueOf(paramId);
++        return Integer.parseInt(paramId);
+     }
+ }
+Index: src/test/java/ru/javawebinar/topjava/MealTestData.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/ru/javawebinar/topjava/MealTestData.java	(revision 2076b5f98d3a143f5e9f57783118f893d56be59b)
++++ src/test/java/ru/javawebinar/topjava/MealTestData.java	(date 1585754803739)
+@@ -27,7 +27,7 @@
+     public static final List<Meal> MEALS = List.of(MEAL7, MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1);
+ 
+     public static Meal getNew() {
+-        return new Meal(null, of(2020, Month.JUNE, 1, 18, 0), "Созданный ужин", 300);
++        return new Meal(null, of(2020, Month.FEBRUARY, 1, 18, 0), "Созданный ужин", 300);
+     }
+ 
+     public static Meal getUpdated() {

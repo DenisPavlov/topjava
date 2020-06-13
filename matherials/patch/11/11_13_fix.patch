@@ -1,0 +1,48 @@
+Index: src/main/webapp/WEB-INF/jsp/fragments/bodyHeader.jsp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/webapp/WEB-INF/jsp/fragments/bodyHeader.jsp	(revision 437f4d8d8c79b04fc32b84cdc67583b224e16d7c)
++++ src/main/webapp/WEB-INF/jsp/fragments/bodyHeader.jsp	(date 1587638735368)
+@@ -48,7 +48,4 @@
+ </nav>
+ <script type="text/javascript">
+     var localeCode = "${pageContext.response.locale}";
+-</script>
+-<script type="text/javascript">
+-    var localeCode = "${pageContext.response.locale}";
+-</script>
++</script>
+\ No newline at end of file
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .gitignore	(revision 437f4d8d8c79b04fc32b84cdc67583b224e16d7c)
++++ .gitignore	(date 1587639601640)
+@@ -3,6 +3,4 @@
+ target
+ *.iml
+ log
+-*.patch
+-
+-
++*.patch
+\ No newline at end of file
+Index: src/main/java/ru/javawebinar/topjava/web/meal/MealUIController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/javawebinar/topjava/web/meal/MealUIController.java	(revision 437f4d8d8c79b04fc32b84cdc67583b224e16d7c)
++++ src/main/java/ru/javawebinar/topjava/web/meal/MealUIController.java	(date 1587638189548)
+@@ -37,6 +37,7 @@
+     }
+ 
+     @PostMapping
++    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+     public void createOrUpdate(@Validated(View.Web.class) Meal meal) {
+         if (meal.isNew()) {
+             super.create(meal);

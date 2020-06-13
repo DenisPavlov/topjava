@@ -1,0 +1,212 @@
+Index: src/test/java/ru/javawebinar/topjava/service/AbstractUserServiceTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/ru/javawebinar/topjava/service/AbstractUserServiceTest.java	(revision 89d11f284e37ab93a91be8593e8361550d6fa407)
++++ src/test/java/ru/javawebinar/topjava/service/AbstractUserServiceTest.java	(date 1586382420026)
+@@ -38,7 +38,7 @@
+     @Test
+     void duplicateMailCreate() throws Exception {
+         assertThrows(DataAccessException.class, () ->
+-                service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.ROLE_USER)));
++                service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.USER)));
+     }
+ 
+     @Test
+@@ -84,9 +84,9 @@
+ 
+     @Test
+     void createWithException() throws Exception {
+-        validateRootCause(() -> service.create(new User(null, "  ", "mail@yandex.ru", "password", Role.ROLE_USER)), ConstraintViolationException.class);
+-        validateRootCause(() -> service.create(new User(null, "User", "  ", "password", Role.ROLE_USER)), ConstraintViolationException.class);
+-        validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "  ", Role.ROLE_USER)), ConstraintViolationException.class);
++        validateRootCause(() -> service.create(new User(null, "  ", "mail@yandex.ru", "password", Role.USER)), ConstraintViolationException.class);
++        validateRootCause(() -> service.create(new User(null, "User", "  ", "password", Role.USER)), ConstraintViolationException.class);
++        validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "  ", Role.USER)), ConstraintViolationException.class);
+         validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "password", 9, true, new Date(), Set.of())), ConstraintViolationException.class);
+         validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "password", 10001, true, new Date(), Set.of())), ConstraintViolationException.class);
+     }
+Index: src/main/java/ru/javawebinar/topjava/util/UserUtil.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/javawebinar/topjava/util/UserUtil.java	(revision 89d11f284e37ab93a91be8593e8361550d6fa407)
++++ src/main/java/ru/javawebinar/topjava/util/UserUtil.java	(date 1586382499563)
+@@ -9,7 +9,7 @@
+     public static final int DEFAULT_CALORIES_PER_DAY = 2000;
+ 
+     public static User createNewFromTo(UserTo userTo) {
+-        return new User(null, userTo.getName(), userTo.getEmail().toLowerCase(), userTo.getPassword(), Role.ROLE_USER);
++        return new User(null, userTo.getName(), userTo.getEmail().toLowerCase(), userTo.getPassword(), Role.USER);
+     }
+ 
+     public static UserTo asTo(User user) {
+Index: src/main/resources/db/populateDB.sql
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/db/populateDB.sql	(revision 89d11f284e37ab93a91be8593e8361550d6fa407)
++++ src/main/resources/db/populateDB.sql	(date 1586382382299)
+@@ -8,9 +8,9 @@
+   ('Admin', 'admin@gmail.com', 'admin');
+ 
+ INSERT INTO user_roles (role, user_id) VALUES
+-  ('ROLE_USER', 100000),
+-  ('ROLE_ADMIN', 100001),
+-  ('ROLE_USER', 100001);
++  ('USER', 100000),
++  ('ADMIN', 100001),
++  ('USER', 100001);
+ 
+ INSERT INTO meals (date_time, description, calories, user_id)
+ VALUES ('2020-01-30 10:00:00', 'Завтрак', 500, 100000),
+Index: src/test/java/ru/javawebinar/topjava/UserTestData.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/ru/javawebinar/topjava/UserTestData.java	(revision 89d11f284e37ab93a91be8593e8361550d6fa407)
++++ src/test/java/ru/javawebinar/topjava/UserTestData.java	(date 1586382420039)
+@@ -14,18 +14,18 @@
+     public static final int USER_ID = START_SEQ;
+     public static final int ADMIN_ID = START_SEQ + 1;
+ 
+-    public static final User USER = new User(USER_ID, "User", "user@yandex.ru", "password", Role.ROLE_USER);
+-    public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", Role.ROLE_ADMIN, Role.ROLE_USER);
++    public static final User USER = new User(USER_ID, "User", "user@yandex.ru", "password", Role.USER);
++    public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", Role.ADMIN, Role.USER);
+ 
+     public static User getNew() {
+-        return new User(null, "New", "new@gmail.com", "newPass", 1555, false, new Date(), Collections.singleton(Role.ROLE_USER));
++        return new User(null, "New", "new@gmail.com", "newPass", 1555, false, new Date(), Collections.singleton(Role.USER));
+     }
+ 
+     public static User getUpdated() {
+         User updated = new User(USER);
+         updated.setName("UpdatedName");
+         updated.setCaloriesPerDay(330);
+-        updated.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
++        updated.setRoles(Collections.singletonList(Role.ADMIN));
+         return updated;
+     }
+ }
+Index: config/Topjava-soapui-project.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- config/Topjava-soapui-project.xml	(revision 89d11f284e37ab93a91be8593e8361550d6fa407)
++++ config/Topjava-soapui-project.xml	(date 1586382382292)
+@@ -83,7 +83,7 @@
+                     <con:request>{"name": "New2",
+  "email": "new2@yandex.ru",
+  "password": "passwordNew",
+- "roles": ["ROLE_USER"]
++ "roles": ["USER"]
+ }
+                     </con:request>
+                     <con:originalUri>http://localhost/topjava/rest/admin/users</con:originalUri>
+@@ -197,7 +197,7 @@
+                     <con:request>{"name": "UserUpdated",
+  "email": "user@yandex.ru",
+  "password": "passwordNew",
+- "roles": ["ROLE_USER"]
++ "roles": ["USER"]
+ }
+                     </con:request>
+                     <con:originalUri>http://localhost/topjava/rest/admin/users/100000</con:originalUri>
+@@ -316,7 +316,7 @@
+                     <con:request>{"name": "New777",
+  "email": "new777@yandex.ru",
+  "password": "passwordNew",
+- "roles": ["ROLE_USER"]
++ "roles": ["USER"]
+ }
+                     </con:request>
+                     <con:originalUri>http://localhost/topjava/rest/profile</con:originalUri>
+Index: src/main/java/ru/javawebinar/topjava/model/Role.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/javawebinar/topjava/model/Role.java	(revision 89d11f284e37ab93a91be8593e8361550d6fa407)
++++ src/main/java/ru/javawebinar/topjava/model/Role.java	(date 1586382449891)
+@@ -3,11 +3,11 @@
+ import org.springframework.security.core.GrantedAuthority;
+ 
+ public enum Role implements GrantedAuthority {
+-    ROLE_USER,
+-    ROLE_ADMIN;
++    USER,
++    ADMIN;
+ 
+     @Override
+     public String getAuthority() {
+-        return name();
++        return "ROLE_" + name();
+     }
+ }
+\ No newline at end of file
+Index: src/main/resources/spring/spring-security.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/spring/spring-security.xml	(revision 89d11f284e37ab93a91be8593e8361550d6fa407)
++++ src/main/resources/spring/spring-security.xml	(date 1586382535623)
+@@ -9,7 +9,7 @@
+ 
+     <http pattern="/rest/**" use-expressions="true" name="restSecurityFilterChain" create-session="stateless">
+         <http-basic/>
+-        <intercept-url pattern="/rest/admin/**" access="hasRole('ROLE_ADMIN')"/>
++        <intercept-url pattern="/rest/admin/**" access="hasRole('ADMIN')"/>
+         <intercept-url pattern="/**" access="isAuthenticated()"/>
+         <csrf disabled="true"/>
+     </http>
+@@ -19,7 +19,7 @@
+     <http>
+         <intercept-url pattern="/login" access="permitAll()"/>
+ 
+-        <intercept-url pattern="/**/admin/**" access="hasRole('ROLE_ADMIN')"/>
++        <intercept-url pattern="/**/admin/**" access="hasRole('ADMIN')"/>
+         <intercept-url pattern="/**" access="isAuthenticated()"/>
+ 
+         <form-login login-page="/login" default-target-url="/meals"
+@@ -32,17 +32,6 @@
+     <authentication-manager>
+         <authentication-provider user-service-ref="userService">
+             <password-encoder ref="noopEncoder"/>
+-<!--
+-            <jdbc-user-service data-source-ref="dataSource"
+-                               users-by-username-query="SELECT email, password, enabled FROM users WHERE email = ?"
+-                               authorities-by-username-query="
+-                                                       SELECT u.email, r.role FROM users u, user_roles r WHERE u.id = r.user_id AND u.email = ?"
+-            />
+-            <user-service>
+-                <user name="user@yandex.ru" password="password" authorities="ROLE_USER"/>
+-                <user name="admin@gmail.com" password="admin" authorities="ROLE_ADMIN"/>
+-            </user-service>
+--->
+         </authentication-provider>
+     </authentication-manager>
+ </beans:beans>
+\ No newline at end of file
+Index: src/test/java/ru/javawebinar/topjava/SpringMain.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/ru/javawebinar/topjava/SpringMain.java	(revision 89d11f284e37ab93a91be8593e8361550d6fa407)
++++ src/test/java/ru/javawebinar/topjava/SpringMain.java	(date 1586382420034)
+@@ -26,7 +26,7 @@
+ 
+             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
+             AdminRestController adminUserController = appCtx.getBean(AdminRestController.class);
+-            adminUserController.create(new User(null, "userName", "email@mail.ru", "password", Role.ROLE_ADMIN));
++            adminUserController.create(new User(null, "userName", "email@mail.ru", "password", Role.ADMIN));
+             System.out.println();
+ 
+             mockAuthorize(USER);

@@ -1,0 +1,78 @@
+Index: config/messages/app.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- config/messages/app.properties	(revision a9722207e7169c9e4cb1e21680d98201039f5ded)
++++ config/messages/app.properties	(date 1586375353706)
+@@ -16,10 +16,10 @@
+ meal.edit=Edit meal
+ meal.add=Add meal
+ meal.filter=Filter
+-meal.startDate=From date
+-meal.endDate=To date
+-meal.startTime=From time
+-meal.endTime=To time
++meal.startDate=From date (inclusive)
++meal.endDate=To date (inclusive)
++meal.startTime=From time (inclusive)
++meal.endTime=To time (exclusive)
+ meal.description=Description
+ meal.dateTime=Date/Time
+ meal.calories=Calories
+Index: src/main/java/ru/javawebinar/topjava/model/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/javawebinar/topjava/model/User.java	(revision a9722207e7169c9e4cb1e21680d98201039f5ded)
++++ src/main/java/ru/javawebinar/topjava/model/User.java	(date 1586375422906)
+@@ -49,7 +49,8 @@
+ 
+     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+     @Enumerated(EnumType.STRING)
+-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
++    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
++            uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role"}, name = "user_roles_unique_idx")})
+     @Column(name = "role")
+     @ElementCollection(fetch = FetchType.EAGER)
+ //    @Fetch(FetchMode.SUBSELECT)
+Index: src/main/resources/spring/spring-security.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/spring/spring-security.xml	(revision a9722207e7169c9e4cb1e21680d98201039f5ded)
++++ src/main/resources/spring/spring-security.xml	(date 1586375189140)
+@@ -2,8 +2,7 @@
+              xmlns:beans="http://www.springframework.org/schema/beans"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+-	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+-http://www.springframework.org/schema/security ">
++	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+ 
+     <http pattern="/resources/**" security="none"/>
+     <http pattern="/webjars/**" security="none"/>
+Index: config/messages/app_ru.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- config/messages/app_ru.properties	(revision a9722207e7169c9e4cb1e21680d98201039f5ded)
++++ config/messages/app_ru.properties	(date 1586375353706)
+@@ -16,10 +16,10 @@
+ meal.edit=Редактировать еду
+ meal.add=Добавить еду
+ meal.filter=Отфильтровать
+-meal.startDate=От даты
+-meal.endDate=До даты
+-meal.startTime=От времени
+-meal.endTime=До времени
++meal.startDate=От даты (включая)
++meal.endDate=До даты (включая)
++meal.startTime=От времени (включая)
++meal.endTime=До времени (исключая)
+ meal.description=Описание
+ meal.dateTime=Дата/Время
+ meal.calories=Калории

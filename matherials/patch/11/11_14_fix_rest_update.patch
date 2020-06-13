@@ -1,0 +1,174 @@
+Index: src/main/java/ru/javawebinar/topjava/web/user/AbstractUserController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/javawebinar/topjava/web/user/AbstractUserController.java	(revision baa2c44b6db9ecb4c27f9c3f476cd515f35366b4)
++++ src/main/java/ru/javawebinar/topjava/web/user/AbstractUserController.java	(date 1588257892855)
+@@ -4,8 +4,10 @@
+ import org.slf4j.LoggerFactory;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.core.env.Environment;
++import org.springframework.validation.BindException;
+ import org.springframework.web.bind.WebDataBinder;
+ import org.springframework.web.bind.annotation.InitBinder;
++import ru.javawebinar.topjava.HasId;
+ import ru.javawebinar.topjava.Profiles;
+ import ru.javawebinar.topjava.model.AbstractBaseEntity;
+ import ru.javawebinar.topjava.model.User;
+@@ -22,8 +24,11 @@
+ public abstract class AbstractUserController {
+     protected final Logger log = LoggerFactory.getLogger(getClass());
+ 
++    // Validate manually cause UniqueMailValidator doesn't work for update with user.id==null
++    private WebDataBinder binder;
++
+     @Autowired
+-    private UserService service;
++    protected UserService service;
+ 
+     @Autowired
+     private UniqueMailValidator emailValidator;
+@@ -38,7 +43,10 @@
+ 
+     @InitBinder
+     protected void initBinder(WebDataBinder binder) {
+-        binder.addValidators(emailValidator);
++        if (binder.getTarget() != null && emailValidator.supports(binder.getTarget().getClass())) {
++            binder.addValidators(emailValidator);
++            this.binder = binder;
++        }
+     }
+ 
+     public List<User> getAll() {
+@@ -68,11 +76,14 @@
+         service.delete(id);
+     }
+ 
+-    public void update(User user, int id) {
++    protected void checkAndValidateForUpdate(HasId user, int id) throws BindException {
+         log.info("update {} with id={}", user, id);
+         assureIdConsistent(user, id);
+         checkModificationAllowed(id);
+-        service.update(user);
++        binder.validate();
++        if (binder.getBindingResult().hasErrors()) {
++            throw new BindException(binder.getBindingResult());
++        }
+     }
+ 
+     public void update(UserTo userTo, int id) {
+Index: src/main/java/ru/javawebinar/topjava/util/ValidationUtil.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/javawebinar/topjava/util/ValidationUtil.java	(revision baa2c44b6db9ecb4c27f9c3f476cd515f35366b4)
++++ src/main/java/ru/javawebinar/topjava/util/ValidationUtil.java	(date 1588257892845)
+@@ -84,9 +84,9 @@
+         validator = factory.getValidator();
+     }
+ 
+-    public static <T> void validate(T bean) {
++    public static <T> void validate(T bean, Class<?>... groups) {
+         // https://alexkosarev.name/2018/07/30/bean-validation-api/
+-        Set<ConstraintViolation<T>> violations = validator.validate(bean);
++        Set<ConstraintViolation<T>> violations = validator.validate(bean, groups);
+         if (!violations.isEmpty()) {
+             throw new ConstraintViolationException(violations);
+         }
+Index: src/main/java/ru/javawebinar/topjava/web/user/AdminRestController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/javawebinar/topjava/web/user/AdminRestController.java	(revision baa2c44b6db9ecb4c27f9c3f476cd515f35366b4)
++++ src/main/java/ru/javawebinar/topjava/web/user/AdminRestController.java	(date 1588257892861)
+@@ -3,6 +3,7 @@
+ import org.springframework.http.HttpStatus;
+ import org.springframework.http.MediaType;
+ import org.springframework.http.ResponseEntity;
++import org.springframework.validation.BindException;
+ import org.springframework.validation.annotation.Validated;
+ import org.springframework.web.bind.annotation.*;
+ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+@@ -45,11 +46,11 @@
+         super.delete(id);
+     }
+ 
+-    @Override
+     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+     @ResponseStatus(value = HttpStatus.NO_CONTENT)
+-    public void update(@Validated(View.Web.class) @RequestBody User user, @PathVariable int id) {
+-        super.update(user, id);
++    public void update(@RequestBody User user, @PathVariable int id) throws BindException {
++        checkAndValidateForUpdate(user, id);
++        service.update(user);
+     }
+ 
+     @GetMapping("/by")
+Index: src/test/java/ru/javawebinar/topjava/web/user/AdminRestControllerTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/ru/javawebinar/topjava/web/user/AdminRestControllerTest.java	(revision baa2c44b6db9ecb4c27f9c3f476cd515f35366b4)
++++ src/test/java/ru/javawebinar/topjava/web/user/AdminRestControllerTest.java	(date 1588257892875)
+@@ -95,12 +95,13 @@
+     @Test
+     void update() throws Exception {
+         User updated = UserTestData.getUpdated();
++        updated.setId(null);
+         perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
+                 .contentType(MediaType.APPLICATION_JSON)
+                 .with(userHttpBasic(ADMIN))
+                 .content(UserTestData.jsonWithPassword(updated, "newPass")))
+                 .andExpect(status().isNoContent());
+-
++        updated.setId(USER.id());
+         USER_MATCHER.assertMatch(userService.get(USER_ID), updated);
+     }
+ 
+Index: src/main/java/ru/javawebinar/topjava/web/user/ProfileRestController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/javawebinar/topjava/web/user/ProfileRestController.java	(revision baa2c44b6db9ecb4c27f9c3f476cd515f35366b4)
++++ src/main/java/ru/javawebinar/topjava/web/user/ProfileRestController.java	(date 1588257892868)
+@@ -4,6 +4,7 @@
+ import org.springframework.http.MediaType;
+ import org.springframework.http.ResponseEntity;
+ import org.springframework.security.core.annotation.AuthenticationPrincipal;
++import org.springframework.validation.BindException;
+ import org.springframework.web.bind.annotation.*;
+ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+ import ru.javawebinar.topjava.AuthorizedUser;
+@@ -40,8 +41,9 @@
+ 
+     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+     @ResponseStatus(HttpStatus.NO_CONTENT)
+-    public void update(@Valid @RequestBody UserTo userTo, @AuthenticationPrincipal AuthorizedUser authUser) {
+-        super.update(userTo, authUser.getId());
++    public void update(@RequestBody UserTo userTo, @AuthenticationPrincipal AuthorizedUser authUser) throws BindException {
++        checkAndValidateForUpdate(userTo, authUser.getId());
++        service.update(userTo);
+     }
+ 
+     @GetMapping(value = "/text")
+Index: src/test/java/ru/javawebinar/topjava/web/user/ProfileRestControllerTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/ru/javawebinar/topjava/web/user/ProfileRestControllerTest.java	(revision baa2c44b6db9ecb4c27f9c3f476cd515f35366b4)
++++ src/test/java/ru/javawebinar/topjava/web/user/ProfileRestControllerTest.java	(date 1588257892880)
+@@ -71,7 +71,7 @@
+ 
+     @Test
+     void update() throws Exception {
+-        UserTo updatedTo = new UserTo(null, "newName", "newemail@ya.ru", "newPassword", 1500);
++        UserTo updatedTo = new UserTo(null, "newName", "user@yandex.ru", "newPassword", 1500);
+         perform(MockMvcRequestBuilders.put(REST_URL).contentType(MediaType.APPLICATION_JSON)
+                 .with(userHttpBasic(USER))
+                 .content(JsonUtil.writeValue(updatedTo)))

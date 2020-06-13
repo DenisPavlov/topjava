@@ -1,0 +1,35 @@
+Index: src/main/java/ru/javawebinar/topjava/service/UserService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/javawebinar/topjava/service/UserService.java	(revision 3552e46f121d8cd931adf5e82f3097774a88a074)
++++ src/main/java/ru/javawebinar/topjava/service/UserService.java	(date 1587590884782)
+@@ -76,7 +76,7 @@
+     @CacheEvict(value = "users", allEntries = true)
+     @Transactional
+     public void enable(int id, boolean enabled) {
+-        User user = get(id);
++        User user = checkNotFoundWithId(get(id), id);
+         user.setEnabled(enabled);
+         repository.save(user);  // !! need only for JDBC implementation
+     }
+Index: src/main/java/ru/javawebinar/topjava/web/user/ProfileRestController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/ru/javawebinar/topjava/web/user/ProfileRestController.java	(revision 3552e46f121d8cd931adf5e82f3097774a88a074)
++++ src/main/java/ru/javawebinar/topjava/web/user/ProfileRestController.java	(date 1587590845542)
+@@ -37,10 +37,7 @@
+         return ResponseEntity.created(uriOfNewResource).body(created);
+     }
+ 
+-    @PutMapping(consumes =
+-
+-
+-            MediaType.APPLICATION_JSON_VALUE)
++    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+     @ResponseStatus(HttpStatus.NO_CONTENT)
+     public void update(@RequestBody UserTo userTo) {
+         super.update(userTo, authUserId());
