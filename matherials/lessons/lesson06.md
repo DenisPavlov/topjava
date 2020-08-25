@@ -36,7 +36,7 @@
 #### Apply 6_04_HW5_optional_fix_jdbc_profiles.patch
 > Сделал классы `Java8JdbcMealRepository` и `TimestampJdbcMealRepository` внутренними
 
-- <a href="http://javarticles.com/2013/12/spring-profiles.html">Spring Profiles</a>. <a href="https://www.javacodegeeks.com/2013/10/spring-4-conditional.html">Spring 4 Conditional</a>.
+- <a href="http://javarticles.com/2013/12/spring-profiles.html">Spring Profiles</a>. <a href="https://www.javacodegeeks.com/2013/10/spring-4-conditional.html">Spring 4 Conditional</a>+.
 - зайдите в исходники `@Profile` и посмотрите (подебажьте) его  реализацию через `@Conditional(ProfileCondition.class)`.
 - дополнительно: [реализация через Java Config и Profiles на уровне методов](http://stackoverflow.com/a/43645463/548473)
 
