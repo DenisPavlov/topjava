@@ -181,7 +181,7 @@
 > - В `UserServiceTest.setUp` вместо вызова метода `UserService.evictCache` сделал очистку программно через `CacheManager`
 >   - [Evict Ehcache elements programmatically, using Spring](https://stackoverflow.com/questions/29557959/evict-ehcache-elements-programmatically-using-spring)
 
--  <a href="http://habrahabr.ru/post/113945/">Кэширование в Spring Framework</a>
+-  <a href="http://habrahabr.ru/post/113945/">Кэширование в Spring Framework</a>+
 -  Дополнительно:
    -  <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#cache">Spring cache Abstraction</a>
    -  <a href="http://habrahabr.ru/post/25140/">Распределённая система кэша ehcache</a>
@@ -191,7 +191,7 @@
 > В <a href="https://github.com/spring-projects/spring-petclinic/tree/master/src/main/java/org/springframework/samples/petclinic">spring-petclinic</a> `DataJpa` реализована без дополнительных классов. В таком виде как у них, spring data смотрится, конечно, намного лаконичней других реализаций, но у нас получилось  вдвое больше кода, чем с тем же jpa или jdbc. Плюс только пожалуй в том, что query находятся прямо в репозитории, а  не где-то там в другом пакете. Так что получается, spring data лучше подходит для простейших crud без всяких "фишек"? или в чем его достоинство для больших и сложных проектов?
 
 Достоинства DATA-JPA по сравнению, например, с JPA: есть типизация, готовые реализации типовых методов CRUD, а также paging, data-common. Мы можем переключить реализацию JPA, например, на mongoDb (`PagingAndSortingRepository`, от которого наследуется `JpaRepository`, находится в `spring-data-common`).
-Соответственно, его методы будут поддерживаться всеми реализациями `spring-data-common` (JPA - одна из них) и пр. Подробнее о них есть в видео <a href="http://jeeconf.com/archive/jeeconf-2013/materials/spring-data/">Spring Data – новый взгляд на persistence</a>.
+Соответственно, его методы будут поддерживаться всеми реализациями `spring-data-common` (JPA - одна из них) и пр. Подробнее о них есть в видео <a href="http://jeeconf.com/archive/jeeconf-2013/materials/spring-data/">Spring Data – новый взгляд на persistence+</a>.
 Дополнительное проксирование в DATA-JPA - моя "фишка" для устранения минусов этого фреймворка: невозможность дебага, привязка к интерфейсу JpaRepository, перенос логики Repository в слой сервисов.
 Для большого приложения выигрыш этого стоит. Для небольших (тестовых) приложений (например выпускного) дополнительных классов лучше не делать.
 
