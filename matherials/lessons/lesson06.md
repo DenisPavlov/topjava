@@ -24,7 +24,7 @@
 > - `DbTest` переименовал в `AbstractServiceTest` и сюда перенес `@ActiveProfiles(resolver = ActiveDbProfileResolver.class)`
 > - Заменил `description.getMethodName()` на `getDisplayName()` в выводе результатов тестов. После `printResult()` буфер сбрасывается в 0, чтобы не накапливать изменения. 
 
-- [Методы класса String, появившиеся в Java 11](https://topjava.ru/blog/java-11-string-api-additions)
+- [Методы класса String, появившиеся в Java 11](https://topjava.ru/blog/java-11-string-api-additions)+
 
 #### Apply 6_03_extract_rules.patch
 > Вынес измерение времени и сводку в отдельный класс `TimingRules`
