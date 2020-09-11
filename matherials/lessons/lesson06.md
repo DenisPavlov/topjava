@@ -82,7 +82,7 @@ C `@BatchSize(size = 200)` делается запрос на юзеров (1), 
 **Теперь уже все Jdbc тесты поломались. Требуется починить в HW6**
 
 -  <a href="http://habrahabr.ru/post/135176/">Уровни кэширования Hibernate</a>
--  <a href="http://habrahabr.ru/post/136375/">Hibernate Cache. Практика</a>
+-  <a href="http://habrahabr.ru/post/136375/">Hibernate Cache. Практика</a>+
 -  <a href="http://www.tutorialspoint.com/hibernate/hibernate_caching.htm">Hibernate - Caching</a>
 -  Починка тестов: <a href="http://stackoverflow.com/questions/1603846/hibernate-2nd-level-cache-invalidation-when-another-process-modifies-the-databas">инвалидация кэша Hibernate</a>
 -  [Hibernate User Guide: Caching](http://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#caching)
