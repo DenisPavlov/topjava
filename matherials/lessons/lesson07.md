@@ -56,7 +56,7 @@ GROUP BY u.id
 ```
 ### Валидация для `JdbcUserRepository` через Bean Validation API
 #### Apply 7_07_HW6_optional_jdbc_validation.patch
-- [Валидация данных при помощи Bean Validation API](https://alexkosarev.name/2018/07/30/bean-validation-api/). Т.к. `Validator` thread-safe (из Javadoc), его лучше создать один раз и переиспользовать 
+- [Валидация данных при помощи Bean Validation API+](https://alexkosarev.name/2018/07/30/bean-validation-api/). Т.к. `Validator` thread-safe (из Javadoc), его лучше создать один раз и переиспользовать 
 - Проверку `@NotNull Meal.user` пока закомментировал. Починим в 10-м занятии через `@JsonView`.
 
 ### Отключение кэша в тестах:
