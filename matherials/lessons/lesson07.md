@@ -84,7 +84,7 @@ GROUP BY u.id
 
 - [JUnit 5 homepage](https://junit.org/junit5)
 - [Overview](https://junit.org/junit5/docs/snapshot/user-guide/#overview)
-- [10 интересных нововведений](https://habr.com/post/337700)
+- [10 интересных нововведений+](https://habr.com/post/337700)
 - Дополнительно:
     - [Extension Model](https://junit.org/junit5/docs/current/user-guide/#extensions)
     - [A Guide to JUnit 5](http://www.baeldung.com/junit-5)
