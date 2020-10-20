@@ -98,16 +98,16 @@ GROUP BY u.id
 ### ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) 5. [Принципы REST. REST контроллеры](https://drive.google.com/open?id=1e4ySjV15ZbswqzL29UkRSdGb4lcxXFm1)
 #### Apply 7_11_rest_controller.patch
  
--  <a href="http://spring-projects.ru/understanding/rest/">Понимание REST</a>
--  <a href="https://ru.wikipedia.org/wiki/JSON">JSON (JavaScript Object Notation)</a>
-- [15 тривиальных фактов о правильной работе с протоколом HTTP](https://habrahabr.ru/company/yandex/blog/265569/)
-- [10 Best Practices for Better RESTful](https://medium.com/@mwaysolutions/10-best-practices-for-better-restful-api-cbe81b06f291)
-- [Best practices for rest nested resources](https://stackoverflow.com/questions/20951419/what-are-best-practices-for-rest-nested-resources)
+-  <a href="http://spring-projects.ru/understanding/rest/">Понимание REST</a>+
+-  <a href="https://ru.wikipedia.org/wiki/JSON">JSON (JavaScript Object Notation)</a>+
+- [15 тривиальных фактов о правильной работе с протоколом HTTP+](https://habrahabr.ru/company/yandex/blog/265569/)
+- [10 Best Practices for Better RESTful+](https://medium.com/@mwaysolutions/10-best-practices-for-better-restful-api-cbe81b06f291)
+- [Best practices for rest nested resources+](https://stackoverflow.com/questions/20951419/what-are-best-practices-for-rest-nested-resources)
 -  <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-requestmapping">Request mapping</a>
 -  Дополнительно:
    - [Подборка практик REST](https://gist.github.com/Londeren/838c8a223b92aa4017d3734d663a0ba3)
    -  <a href="http://www.infoq.com/articles/springmvc_jsx-rs">JAX-RS vs Spring MVC</a>
-   - <a href="http://habrahabr.ru/post/144011/">RESTful API для сервера – делаем правильно (Часть 1)</a>
+   - <a href="http://habrahabr.ru/post/144011/">RESTful API для сервера – делаем правильно (Часть 1)</a>+
    - <a href="http://habrahabr.ru/post/144259/">RESTful API для сервера – делаем правильно (Часть 2)</a>
    - <a href="https://www.youtube.com/watch?v=Q84xT4Zd7vs&list=PLoij6udfBncivGZAwS2yQaFGWz4O7oH48">И. Головач. RestAPI</a>
    - [value/name в аннотациях @PathVariable и @RequestParam](https://habr.com/ru/post/440214/)
