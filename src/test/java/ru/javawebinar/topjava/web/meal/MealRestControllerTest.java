@@ -102,8 +102,10 @@ class MealRestControllerTest extends AbstractControllerTest {
         LocalDateTime end = LocalDateTime.of(2020, Month.JANUARY, 30, 23, 59, 59);
 
         perform(MockMvcRequestBuilders.get(REST_URL + "between")
-                .param("start", start.toString())
-                .param("end", end.toString()))
+                .param("startDate", start.toLocalDate().toString())
+                .param("endDate", end.toLocalDate().toString())
+                .param("startTime", start.toLocalTime().toString())
+                .param("endTime", end.toLocalTime().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
