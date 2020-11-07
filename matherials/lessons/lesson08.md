@@ -135,8 +135,8 @@ DataTables/Bootstrap
 
 #### Apply 8_10_add_security.patch
 -  <a href="http://projects.spring.io/spring-security/">Spring Security</a>
--  <a href="https://ru.wikipedia.org/wiki/Протокол_AAA">Протокол AAA</a>
--  <a href="https://ru.wikipedia.org/wiki/Аутентификация_в_Интернете">Методы аутентификации</a>.
+-  <a href="https://ru.wikipedia.org/wiki/Протокол_AAA">Протокол AAA+</a>
+-  <a href="https://ru.wikipedia.org/wiki/Аутентификация_в_Интернете">Методы аутентификации+</a>.
 -  <a href="https://en.wikipedia.org/wiki/Basic_access_authentication">Basic access authentication</a>
 -  <a href="http://articles.javatalks.ru/articles/17">Использование ThreadLocal</a>
 -  <a href="http://www.baeldung.com/security-spring">Security with Spring</a>
