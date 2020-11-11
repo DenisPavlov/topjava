@@ -11,13 +11,13 @@
         <param-value>postgres,datajpa</param-value>
     </context-param>
 
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>
-            classpath:spring/spring-app.xml
-            classpath:spring/spring-db.xml
-        </param-value>
-    </context-param>
+<!--    <context-param>-->
+<!--        <param-name>contextConfigLocation</param-name>-->
+<!--        <param-value>-->
+<!--            classpath:spring/spring-app.xml-->
+<!--            classpath:spring/spring-db.xml-->
+<!--        </param-value>-->
+<!--    </context-param>-->
 
     <!-- Spring MVC -->
     <listener>
