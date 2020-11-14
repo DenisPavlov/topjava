@@ -39,7 +39,7 @@
 > - Перенес метод `enable` в `topjava.users.js` и сделал стиль для пользователей через атрибут `data-userEnabled`
 > - Меняю стиль `<tr>` ПОСЛЕ успешной обработки запроса через `data-userEnabled`, при ошибке возвращаю `checked` в прежнее состояние
 > - Убрал `init()`. При переводе таблицы на Ajax вместо него будет `createdRow`. Атрибуты `data-userEnabled` добавляются при отрисовки таблицы в JSP
-> - Добавил `AdminRestController.enable` через [PATCH - частичное изменение ресурса](http://restcookbook.com/HTTP%20Methods/patch/). Интересно, что через PUT реализация без дополнительных приседаний не получится, т.к. [сервлеты не поддерживают параметров в PUT и DELETE](https://stackoverflow.com/a/39706584/548473).   
+> - Добавил `AdminRestController.enable` через [PATCH - частичное изменение ресурса+](http://restcookbook.com/HTTP%20Methods/patch/). Интересно, что через PUT реализация без дополнительных приседаний не получится, т.к. [сервлеты не поддерживают параметров в PUT и DELETE](https://stackoverflow.com/a/39706584/548473).   
 
 ## Занятие 9:
 
