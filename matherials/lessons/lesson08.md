@@ -138,8 +138,8 @@ DataTables/Bootstrap
 -  <a href="https://ru.wikipedia.org/wiki/Протокол_AAA">Протокол AAA+</a>
 -  <a href="https://ru.wikipedia.org/wiki/Аутентификация_в_Интернете">Методы аутентификации+</a>.
 -  <a href="https://en.wikipedia.org/wiki/Basic_access_authentication">Basic access authentication</a>
--  <a href="http://articles.javatalks.ru/articles/17">Использование ThreadLocal</a>
--  <a href="http://www.baeldung.com/security-spring">Security with Spring</a>
+-  <a href="http://articles.javatalks.ru/articles/17">Использование ThreadLocal+</a>
+-  <a href="http://www.baeldung.com/security-spring">Security with Spring+</a>
 -  [Decode/Encode Base64 online](http://decodebase64.com/)
 
 Вместо 
