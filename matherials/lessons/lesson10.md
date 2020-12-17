@@ -38,8 +38,8 @@ Datatables перевели на ajax (`"ajax": {"url": ajaxUrl, ..`), те пр
 -  [Что возвращать: Entity или DTOs](https://stackoverflow.com/a/21569720/548473)
 
 #### Apply 10_04_opt_json_view.patch
-- [Jackson Annotation ](http://www.baeldung.com/jackson-annotations)
-  - [Jackson JSON Views](http://www.baeldung.com/jackson-json-view-annotation)
+- [Jackson Annotation+](http://www.baeldung.com/jackson-annotations)
+  - [Jackson JSON Views+](http://www.baeldung.com/jackson-json-view-annotation)
 - [@JsonView: фильтруем JSON](https://habrahabr.ru/post/307392/)
 - [Jackson set default view](https://stackoverflow.com/questions/22875642/jackson-set-default-view)
 
